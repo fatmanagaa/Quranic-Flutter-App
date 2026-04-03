@@ -2,10 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 import 'package:islami_app/core/app_colors.dart';
 import 'package:islami_app/core/app_styles.dart';
-import 'package:islami_app/core/cache_helper.dart';
 import 'package:islami_app/home/home_screen.dart';
 
-import '../home/home_screen.dart';
 
 class IntroScreen extends StatelessWidget {
   static const String routeName = 'intro';
@@ -49,6 +47,8 @@ class IntroScreen extends StatelessWidget {
       image: Image.asset('assets/images/intro3.png'),
     ),
     PageViewModel(
+
+
       titleWidget: Text('Holy Quran Radio', style: AppStyles.titleStyle),
       bodyWidget: Text(
         "We Are Very Excited To Have You In Our Community",
@@ -57,6 +57,7 @@ class IntroScreen extends StatelessWidget {
       ),
       image: Image.asset('assets/images/intro4.png'),
     ),
+
   ];
 
   @override
@@ -79,9 +80,8 @@ class IntroScreen extends StatelessWidget {
       globalBackgroundColor: AppColors.black,
       showSkipButton: true,
       skip: Text('skip', style: AppStyles.bodyStyle),
-      onSkip: () async {
+      onSkip: () {
         Navigator.pushReplacementNamed(context, HomeScreen.routeName);
-        await CacheHelper.setBool(true);
       },
       showNextButton: true,
       next: Text('Next', style: AppStyles.bodyStyle),
@@ -90,9 +90,8 @@ class IntroScreen extends StatelessWidget {
       back: Text('Back', style: AppStyles.bodyStyle),
       showDoneButton: true,
       done: Text("Done", style: AppStyles.bodyStyle),
-      onDone: () async {
+      onDone: () {
         Navigator.pushReplacementNamed(context, HomeScreen.routeName);
-        await CacheHelper.setBool(true);
       },
     );
   }

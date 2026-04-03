@@ -10,9 +10,10 @@ class HadethTab extends StatelessWidget {
   Widget build(BuildContext context) {
     var height = MediaQuery.of(context).size.height;
     return CarouselSlider(
-      options: CarouselOptions(height:height*0.66),
-      items: List.generate(50, (index)=>index+1).map((index) {
-        return HadethItem();
+      options: CarouselOptions(height: height * 0.66),
+      items: List.generate(50, (index) => index + 1).map((index) {
+        //.map change every index in list to widget as item accept list of widget only
+        return HadethItem(index: index,);
       }).toList(),
     );
   }
