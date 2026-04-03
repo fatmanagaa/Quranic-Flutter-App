@@ -18,6 +18,7 @@ class AppAssets {
   static const String mosque = 'assets/images/img_bottom_decoration.png';
   static const String sebha_head = 'assets/images/sebha_head.png';
   static const String sebha_body = 'assets/images/SebhaBody 1.png';
+  static const String splashScreen_2='assets/images/Splash Screen 2.png';
 
 
 }
