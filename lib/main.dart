@@ -3,9 +3,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:islami_app/core/app_routes.dart';
 import 'package:islami_app/core/app_theme.dart';
 import 'package:islami_app/core/cache_helper.dart';
-import 'package:islami_app/home/home_screen.dart';
-import 'package:islami_app/home/tabs/quran/details/sura_details_screen.dart';
-import 'package:islami_app/intro_screen/intro_screen.dart';
+import 'package:islami_app/features/home/home_screen.dart';
+import 'package:islami_app/features/home/tabs/quran/details/sura_details_screen.dart';
+
+import 'features/introduction/intro_screen.dart';
+import 'features/splash/splash_screen.dart';
 
 
 void main() async {
@@ -26,10 +28,11 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         home: IntroScreen(),
-        initialRoute: IntroScreen.routeName,
+        initialRoute:AppRoutes.splashRouteName,
         routes: {
-          IntroScreen.routeName: (context) => IntroScreen(),
-          HomeScreen.routeName: (context) => HomeScreen(),
+          AppRoutes.splashRouteName: (context) => SplashScreen(),
+          AppRoutes.introRouteName: (context) => IntroScreen(),
+          AppRoutes.homeRouteName: (context) => HomeScreen(),
           AppRoutes.suraDetailsRouteName: (context) => SuraDetailsScreen(),
         },
         darkTheme: AppTheme.darkTheme,
