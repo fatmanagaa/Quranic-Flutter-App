@@ -14,12 +14,11 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-
   @override
   void initState() {
     super.initState();
 
-    Timer(const Duration(seconds: 3), () {
+    Timer(const Duration(seconds: 5), () {
       Navigator.pushReplacementNamed(context, AppRoutes.introRouteName);
     });
   }
@@ -30,10 +29,7 @@ class _SplashScreenState extends State<SplashScreen> {
       body: SizedBox(
         width: double.infinity,
         height: double.infinity,
-        child: Image.asset(
-          AppAssets.splashScreen_2,
-                   fit: BoxFit.cover,
-        ),
+        child: Image.asset(AppAssets.splashScreen_2, fit: BoxFit.cover),
       ),
     );
   }

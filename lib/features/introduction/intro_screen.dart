@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 import 'package:islami_app/core/app_colors.dart';
+import 'package:islami_app/core/app_routes.dart';
 import 'package:islami_app/core/app_styles.dart';
 import 'package:islami_app/features/home/home_screen.dart';
 
 
 class IntroScreen extends StatelessWidget {
-  static const String routeName = 'intro';
 
   IntroScreen({super.key});
 
@@ -68,10 +68,10 @@ class IntroScreen extends StatelessWidget {
         size: const Size.square(10.0),
         activeSize: const Size(20.0, 10.0),
         activeColor: AppColors.primary,
-        color: Colors.black26,
+        color: AppColors.greyScale,
         spacing: const EdgeInsets.symmetric(horizontal: 3.0),
         activeShape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(25.0),
+          borderRadius: BorderRadius.circular(27.0),
         ),
       ),
 
@@ -82,7 +82,7 @@ class IntroScreen extends StatelessWidget {
       showSkipButton: true,
       skip: Text('skip', style: AppStyles.bodyStyle),
       onSkip: () {
-        Navigator.pushReplacementNamed(context, HomeScreen.routeName);
+        Navigator.pushReplacementNamed(context, AppRoutes.homeRouteName);
       },
       showNextButton: true,
       next: Text('Next', style: AppStyles.bodyStyle),
@@ -92,7 +92,7 @@ class IntroScreen extends StatelessWidget {
       showDoneButton: true,
       done: Text("Done", style: AppStyles.bodyStyle),
       onDone: () {
-        Navigator.pushReplacementNamed(context, HomeScreen.routeName);
+        Navigator.pushReplacementNamed(context, AppRoutes.homeRouteName);
       },
     );
   }

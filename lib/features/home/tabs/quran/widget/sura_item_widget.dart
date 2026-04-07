@@ -20,7 +20,7 @@ class SuraItemWidget extends StatelessWidget {
           alignment: Alignment.center,
           children: [
             Image.asset(AppAssets.vector),
-            Text('${index + 1}', style: AppStyles.bold16White),  //ask
+            Text('${index + 1}', style: AppStyles.bold16White),
           ],
         ),
         Column(

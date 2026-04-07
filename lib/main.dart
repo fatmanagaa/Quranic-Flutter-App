@@ -4,6 +4,7 @@ import 'package:islami_app/core/app_routes.dart';
 import 'package:islami_app/core/app_theme.dart';
 import 'package:islami_app/core/cache_helper.dart';
 import 'package:islami_app/features/home/home_screen.dart';
+import 'package:islami_app/features/home/tabs/hadeth/details/hadeth_details_screen.dart';
 import 'package:islami_app/features/home/tabs/quran/details/sura_details_screen.dart';
 
 import 'features/introduction/intro_screen.dart';
@@ -22,7 +23,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
-      designSize: const Size(360, 690),
+      designSize: const Size(400, 750),
       minTextAdapt: true,
       splitScreenMode: true,
       child: MaterialApp(
@@ -34,6 +35,7 @@ class MyApp extends StatelessWidget {
           AppRoutes.introRouteName: (context) => IntroScreen(),
           AppRoutes.homeRouteName: (context) => HomeScreen(),
           AppRoutes.suraDetailsRouteName: (context) => SuraDetailsScreen(),
+          AppRoutes.hadethDetailsRouteName: (context) => HadethDetailsScreen(),
         },
         darkTheme: AppTheme.darkTheme,
         themeMode: ThemeMode.dark,

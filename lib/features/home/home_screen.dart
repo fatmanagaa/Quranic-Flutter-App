@@ -9,14 +9,11 @@ import 'package:islami_app/features/home/tabs/sebha/sebha_tab.dart';
 import 'package:islami_app/features/home/tabs/time/time_tab.dart';
 
 class HomeScreen extends StatefulWidget {
-  static const String routeName = 'home';
-
   HomeScreen({super.key});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
-
 class _HomeScreenState extends State<HomeScreen> {
   int selectedIndex = 0;
   List<Widget> tabsList = [
@@ -34,42 +31,33 @@ class _HomeScreenState extends State<HomeScreen> {
     AppAssets.timeBg,
   ];
 
-  //todo:for listing the background images
-  //   Map<int,String>imageList{
-  //     0:AppAssets.quranBg,
-  //   1:AppAss,
-  //   0:AppAssets.quranBg,
-  //   0:AppAssets.quranBg,
-  //   0:AppAssets.quranBg,
-  // };
-
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
 
-    String getBackgroundImage() {
-      switch (selectedIndex) {
-        case 0:
-          return AppAssets.quranBg;
-        case 1:
-          return AppAssets.hadethBg;
-        case 2:
-          return AppAssets.sebhaBg;
-        case 3:
-          return AppAssets.radioBg;
-        case 4:
-          return AppAssets.timeBg;
-        default:
-          return AppAssets.quranBg;
-      }
-    }
+    // String getBackgroundImage() {
+    //   switch (selectedIndex) {
+    //     case 0:
+    //       return AppAssets.quranBg;
+    //     case 1:
+    //       return AppAssets.hadethBg;
+    //     case 2:
+    //       return AppAssets.sebhaBg;
+    //     case 3:
+    //       return AppAssets.radioBg;
+    //     case 4:
+    //       return AppAssets.timeBg;
+    //     default:
+    //       return AppAssets.quranBg;
+    //   }
+    // }
 
     return Stack(
       children: [
         Image.asset(
-          getBackgroundImage(),
-          //backgroundImages[selectedIndex],
+          // getBackgroundImage(),
+          backgroundImages[selectedIndex],
           width: double.infinity,
           height: double.infinity,
           fit: BoxFit.fill,
@@ -87,11 +75,11 @@ class _HomeScreenState extends State<HomeScreen> {
                   setState(() {});
                 },
 
-                //todo:another way to style bottom navigation bar
-                //selectedItemColor: AppColors.white,
-                //unselectedItemColor: AppColors.black,
-                //backgroundColor: AppColors.primary,
-                //type: BottomNavigationBarType.fixed,
+                // todo:another way to style bottom navigation bar
+                selectedItemColor: AppColors.white,
+                unselectedItemColor: AppColors.black,
+                backgroundColor: AppColors.primary,
+                type: BottomNavigationBarType.fixed,
                 items: [
                   buildBottomNavBar(
                     iconName: AppAssets.iconQuran,
