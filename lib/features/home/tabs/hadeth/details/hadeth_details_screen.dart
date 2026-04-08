@@ -1,36 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:islami_app/core/app_assets.dart';
-import 'package:islami_app/core/app_colors.dart';
-import 'package:islami_app/core/app_styles.dart';
-import 'package:islami_app/model/hadeth.dart';
+import '../../../../../core/app_assets.dart';
+import '../../../../../core/app_colors.dart';
+import '../../../../../core/app_styles.dart';
+import '../../../../../model/hadeth.dart';
 
 class HadethDetailsScreen extends StatelessWidget {
   const HadethDetailsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final hadeth = ModalRoute.of(context)?.settings.arguments as Hadeth?;
-
-    if (hadeth == null) {
-      return Scaffold(
-        backgroundColor: AppColors.black,
-        appBar: AppBar(
-          backgroundColor: Colors.transparent,
-          elevation: 0,
-          leading: IconButton(
-            onPressed: () => Navigator.pop(context),
-            icon: const Icon(Icons.arrow_back, color: AppColors.primary),
-          ),
-        ),
-        body: Center(
-          child: Text(
-            'No hadith data found.',
-            style: AppStyles.bold16White,
-          ),
-        ),
-      );
-    }
+    final args =
+        ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
+    final Hadeth hadeth = args['hadeth'];
+    final int index = args['index'];
 
     return Scaffold(
       backgroundColor: AppColors.black,
@@ -38,70 +21,65 @@ class HadethDetailsScreen extends StatelessWidget {
         backgroundColor: Colors.transparent,
         elevation: 0,
         centerTitle: true,
+        title: Text('Hadith $index', style: AppStyles.bold20Primary),
         leading: IconButton(
           onPressed: () => Navigator.pop(context),
           icon: const Icon(Icons.arrow_back, color: AppColors.primary),
         ),
-        title: Text(
-          hadeth.title,
-          style: AppStyles.bold20Primary,
-        ),
       ),
       body: Stack(
         children: [
-          Image.asset(
-            AppAssets.hadethBg,
-            width: double.infinity,
-            height: double.infinity,
-            fit: BoxFit.fill,
+          Positioned(
+            top: 0,
+            right: 0,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+
+              child: Image.asset(AppAssets.cornerRight, width: 100.w),
+            ),
+          ),
+          Positioned(
+            top: 0,
+            left: 0,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              child: Image.asset(AppAssets.cornerLeft, width: 100.w),
+            ),
+          ),
+          Positioned(
+            bottom: 0,
+            left: 0,
+            right: 0,
+            child: Image.asset(
+              AppAssets.hadethMosque,
+              width: double.infinity,
+              fit: BoxFit.fitWidth,
+            ),
           ),
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
-            child: Container(
-              padding: EdgeInsets.all(20.w),
-              decoration: BoxDecoration(
-                color: AppColors.primary,
-                borderRadius: BorderRadius.circular(25.r),
-              ),
-              child: Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Image.asset(AppAssets.cornerLeft, width: 60.w),
-                      Image.asset(AppAssets.cornerRight, width: 60.w),
-                    ],
-                  ),
-                  SizedBox(height: 10.h),
-                  Text(
-                    hadeth.title,
-                    style: AppStyles.bold24Black,
-                    textAlign: TextAlign.center,
-                    textDirection: TextDirection.rtl,
-                  ),
-                  SizedBox(height: 15.h),
-                  Expanded(
-                    child: SingleChildScrollView(
-                      physics: const BouncingScrollPhysics(),
-                      child: Text(
-                        hadeth.content,
-                        textAlign: TextAlign.center,
-                        textDirection: TextDirection.rtl,
-                        style: AppStyles.bold20White.copyWith(
-                          color: AppColors.black,
-                          height: 1.8,
-                        ),
-                      ),
+            padding: EdgeInsets.symmetric(horizontal: 24.w),
+            child: Column(
+              children: [
+                SizedBox(height: 30.h),
+                Text(
+                  hadeth.title,
+                  style: AppStyles.bold24Primary,
+                  textAlign: TextAlign.center,
+                ),
+                SizedBox(height: 24.h),
+                Expanded(
+                  child: SingleChildScrollView(
+                    physics: const BouncingScrollPhysics(),
+                    child: Text(
+                      hadeth.content,
+                      textAlign: TextAlign.center,
+                      textDirection: TextDirection.rtl,
+                      style: AppStyles.bold20Primary.copyWith(height: 1.6),
                     ),
                   ),
-                  SizedBox(height: 10.h),
-                  Image.asset(
-                    AppAssets.mosque,
-                    width: double.infinity,
-                    fit: BoxFit.fitWidth,
-                  ),
-                ],
-              ),
+                ),
+                SizedBox(height: 120.h),
+              ],
             ),
           ),
         ],

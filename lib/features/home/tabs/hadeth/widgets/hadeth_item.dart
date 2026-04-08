@@ -33,24 +33,14 @@ class HadethItem extends StatelessWidget {
               Positioned.fill(
                 child: Image.asset(
                   AppAssets.hadeethCardBg,
-                  fit: BoxFit.contain,
-                ),
-              ),
-              Positioned(
-                bottom: 0,
-                left: 0,
-                right: 0,
-                child: Image.asset(
-                  AppAssets.hadethMosque,
-                  width: double.infinity,
-                  fit: BoxFit.cover,
+                  fit: BoxFit.fill,
                 ),
               ),
               Positioned(
                 top: 0,
                 right: 0,
                 child: Padding(
-                  padding: EdgeInsetsGeometry.symmetric(horizontal: 10.w, vertical: 5.h),
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0,vertical: 8.0),
                   child: Image.asset(
                     AppAssets.hadethRightCorner,
                     width: 80.w,
@@ -61,18 +51,28 @@ class HadethItem extends StatelessWidget {
                 top: 0,
                 left: 0,
                 child: Padding(
-                  padding: EdgeInsetsGeometry.symmetric(horizontal: 10.w, vertical: 5.h),
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0,vertical: 8.0),
                   child: Image.asset(
                     AppAssets.hadethLeftCorner,
                     width: 80.w,
                   ),
                 ),
               ),
+              Positioned(
+                bottom: 0,
+                left: 0,
+                right: 0,
+                child: Image.asset(
+                  AppAssets.hadethMosque,
+                  width: double.infinity,
+                  fit: BoxFit.fitWidth,
+                ),
+              ),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 15.h),
                 child: Column(
                   children: [
-                    SizedBox(height: 20.h),
+                    SizedBox(height: 30.h),
                     Text(
                       title,
                       textAlign: TextAlign.center,
@@ -93,7 +93,7 @@ class HadethItem extends StatelessWidget {
                         ),
                       ),
                     ),
-                    SizedBox(height: 60.h),
+                    SizedBox(height: 80.h),
                   ],
                 ),
               ),
