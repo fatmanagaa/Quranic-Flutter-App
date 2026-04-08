@@ -91,15 +91,17 @@ class _HadethTabState extends State<HadethTab> {
                   final hadeth = hadethList[index];
 
                   return HadethItem(
-
-
                     title: hadeth.title,
                     onTap: () {
                       Navigator.of(context).pushNamed(
                         AppRoutes.hadethDetailsRouteName,
-                        arguments: hadeth,
+                        arguments: {
+                          'hadeth': hadeth,
+                          'index': index + 1,
+                        },
                       );
-                    }, content: hadeth.content,
+                    },
+                    content: hadeth.content,
                   );
                 },
                 options: CarouselOptions(
