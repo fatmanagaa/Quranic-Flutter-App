@@ -19,6 +19,14 @@ class AppAssets {
   static const String sebha_head = 'assets/images/sebha_head.png';
   static const String sebha_body = 'assets/images/SebhaBody 1.png';
   static const String splashScreen_2='assets/images/Splash Screen 2.png';
+  static const String hadeethCardBg='assets/images/HadithCardBackGround 1.png';
+  static const String hadethLeftCorner='assets/images/hadeth left_corner.png';
+  static const String hadethRightCorner='assets/images/hadeth right_corner.png';
+static const String hadethMosque='assets/images/hadeth Mosque-02 2.png';
+
+
+
+
 
 
 }

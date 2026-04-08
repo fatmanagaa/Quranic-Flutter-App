@@ -1,84 +1,106 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:islami_app/core/app_colors.dart';
-import 'package:islami_app/core/app_styles.dart';
-import 'package:islami_app/model/hadeth.dart';
+import '../../../../../core/app_assets.dart';
+import '../../../../../core/app_styles.dart';
 
-class HadethItem extends StatefulWidget {
-  final int index;
-  Hadeth?hadeth;
- HadethItem({super.key,required this.index});
+class HadethItem extends StatelessWidget {
+  final String title;
+  final String content;
+  final VoidCallback onTap;
 
-
-  @override
-  State<HadethItem> createState() => _HadethItemState();
-
-}
-
-class _HadethItemState extends State<HadethItem> {
-
-  Hadeth?hadeth;
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-
-    loadHadethFile(widget.index);
-  }
-  Future<void> loadHadethFile(int index) async {
-
-    String fileContent = await rootBundle.loadString(
-      'assets/files/hadeeth$index.txt',
-    );
-    List<String> hadeethlines = fileContent.split("\n");
-    String title= hadeethlines[0];
-    String content='';
-    for(int i=0;i<hadeethlines.length;i++){
-      content+=hadeethlines[i];
-
-    }
-    Hadeth(title: title, content: content);
-    await Future.delayed(Duration(seconds: 1));
-    setState(() {
-      hadeth=Hadeth(title: title, content: content);
-
-    });
-
-    // another way do the same
-    // int fileIndex=fileContent.indexOf('/n');
-    // String title=fileContent.substring(0,fileIndex);
-    // // String content=fileContent.substring(fileIndex+1);
-    // Hadeth(title: '', content: '');
-
-
-
-  }
+  const HadethItem({
+    super.key,
+    required this.title,
+    required this.content,
+    required this.onTap,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: AppColors.primary,
-        borderRadius: BorderRadius.circular(20),
-
-      ),
-      child:hadeth==null?
-          Center(
-            child: CircularProgressIndicator(
-              color: AppColors.blackBg,
-            ),
-          )
-          :
-
-      Column(
-        children: [
-          Text(hadeth?.title??'',style: AppStyles.bold24Black,),
-          Text(hadeth?.content??'',style: AppStyles.bold16Black,),
-
-        ],
+    return InkWell(
+      onTap: onTap,
+      child: Container(
+        margin: EdgeInsets.symmetric(horizontal: 12.w),
+        decoration: BoxDecoration(
+          color: AppColors.primary,
+          borderRadius: BorderRadius.circular(20.r),
+        ),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(20.r),
+          child: Stack(
+            children: [
+              Positioned.fill(
+                child: Image.asset(
+                  AppAssets.hadeethCardBg,
+                  fit: BoxFit.contain,
+                ),
+              ),
+              Positioned(
+                bottom: 0,
+                left: 0,
+                right: 0,
+                child: Image.asset(
+                  AppAssets.hadethMosque,
+                  width: double.infinity,
+                  fit: BoxFit.cover,
+                ),
+              ),
+              Positioned(
+                top: 0,
+                right: 0,
+                child: Padding(
+                  padding: EdgeInsetsGeometry.symmetric(horizontal: 10.w, vertical: 5.h),
+                  child: Image.asset(
+                    AppAssets.hadethRightCorner,
+                    width: 80.w,
+                  ),
+                ),
+              ),
+              Positioned(
+                top: 0,
+                left: 0,
+                child: Padding(
+                  padding: EdgeInsetsGeometry.symmetric(horizontal: 10.w, vertical: 5.h),
+                  child: Image.asset(
+                    AppAssets.hadethLeftCorner,
+                    width: 80.w,
+                  ),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 15.h),
+                child: Column(
+                  children: [
+                    SizedBox(height: 20.h),
+                    Text(
+                      title,
+                      textAlign: TextAlign.center,
+                      style: AppStyles.bold24Black,
+                    ),
+                    SizedBox(height: 10.h),
+                    Expanded(
+                      child: SingleChildScrollView(
+                        physics: const BouncingScrollPhysics(),
+                        child: Text(
+                          content,
+                          textAlign: TextAlign.center,
+                          textDirection: TextDirection.rtl,
+                          style: AppStyles.bold16Black.copyWith(
+                            height: 1.6,
+                            color: Colors.black.withOpacity(0.8),
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 60.h),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
     );
-
   }
 }
-
