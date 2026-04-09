@@ -11,13 +11,42 @@ import 'package:islami_app/features/home/tabs/quran/widget/sura_item_widget.dart
 import '../../../../model/quran_resources.dart';
 
 class QuranTab extends StatefulWidget {
-  QuranTab({super.key});
+  const QuranTab({super.key});
 
   @override
   State<QuranTab> createState() => _QuranTabState();
 }
 
 class _QuranTabState extends State<QuranTab> {
+  late final List<int> filterList = List.generate(114, (index) => index);
+  late TextEditingController _searchController;
+
+  @override
+  void initState() {
+    super.initState();
+    _searchController = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
+  }
+
+  List<int> _getFilteredList(String searchQuery) {
+    if (searchQuery.isEmpty) {
+      return List.generate(114, (index) => index);
+    }
+    
+    return List.generate(114, (index) => index).where((index) {
+      final englishName = QuranResources.englishQuranSuraList[index].toLowerCase();
+      final arabicName = QuranResources.arabicQuranSuraList[index];
+      final query = searchQuery.toLowerCase();
+      
+      return englishName.contains(query) || arabicName.contains(searchQuery);
+    }).toList();
+  }
+
   @override
   Widget build(BuildContext context) {
     List<int>? displayMostRecent = CacheHelper.getStringList('items');
@@ -32,8 +61,12 @@ class _QuranTabState extends State<QuranTab> {
         children: [
           SizedBox(height: height * 0.02),
           TextField(
+            controller: _searchController,
             style: AppStyles.bold16White,
             cursorColor: AppColors.primary,
+            onChanged: (value) {
+              setState(() {});
+            },
             decoration: InputDecoration(
               hintText: 'Sura Name',
               hintStyle: AppStyles.bold16White,
@@ -95,17 +128,18 @@ class _QuranTabState extends State<QuranTab> {
           Expanded(
             child: ListView.separated(
               itemBuilder: (context, index) {
+                final filteredList = _getFilteredList(_searchController.text);
                 return InkWell(
                   onTap: () async {
-                    await CacheHelper.saveList(index);
+                    await CacheHelper.saveList(filteredList[index]);
                     setState(() {});
 
                     Navigator.of(context).pushNamed(
                       AppRoutes.suraDetailsRouteName,
-                      arguments: index,
+                      arguments: filteredList[index],
                     );
                   },
-                  child: SuraItemWidget(index: index),
+                  child: SuraItemWidget(index: filteredList[index]),
                 );
               },
               separatorBuilder: (context, index) {
@@ -114,7 +148,7 @@ class _QuranTabState extends State<QuranTab> {
                   child: Divider(color: AppColors.white, thickness: 2),
                 );
               },
-              itemCount: 114,
+              itemCount: _getFilteredList(_searchController.text).length,
             ),
           ),
         ],
