@@ -15,6 +15,15 @@ class _SebhaTabState extends State<SebhaTab> {
   int counter = 0;
   double angle = 0;
 
+  final List<String> azkar = const [
+    'سبحان الله',
+    'الحمدلله',
+    'الله اكبر',
+    'لا اله الا الله',
+    'استغفر الله العظيم',
+  ];
+  int currentZekrIndex = 0;
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -48,11 +57,16 @@ class _SebhaTabState extends State<SebhaTab> {
                   setState(() {
                     counter++;
                     angle += 15 * pi / 180;
+
+                    if (counter == 30) {
+                      counter = 0;
+                      currentZekrIndex = (currentZekrIndex + 1) % azkar.length;
+                    }
                   });
                 },
                 child: Column(
                   children: [
-                    Text('سبحان الله', style: AppStyles.bold36White),
+                    Text(azkar[currentZekrIndex], style: AppStyles.bold36White),
                     SizedBox(height: 12),
                     Text(counter.toString(), style: AppStyles.bold36White),
                   ],
