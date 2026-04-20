@@ -21,6 +21,8 @@ class _SebhaTabState extends State<SebhaTab> {
     'الله اكبر',
     'لا اله الا الله',
     'استغفر الله العظيم',
+    'ربي اني لما انزلت الى من خير فقير',
+    'لا حول ولا قوه الا بالله'
   ];
   int currentZekrIndex = 0;
 
@@ -58,7 +60,7 @@ class _SebhaTabState extends State<SebhaTab> {
                     counter++;
                     angle += 15 * pi / 180;
 
-                    if (counter == 30) {
+                    if (counter == 33) {
                       counter = 0;
                       currentZekrIndex = (currentZekrIndex + 1) % azkar.length;
                     }

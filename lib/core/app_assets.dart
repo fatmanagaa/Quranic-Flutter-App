@@ -23,6 +23,9 @@ class AppAssets {
   static const String hadethLeftCorner='assets/images/hadeth left_corner.png';
   static const String hadethRightCorner='assets/images/hadeth right_corner.png';
 static const String hadethMosque='assets/images/hadeth Mosque-02 2.png';
+  static const String radioPartBg='assets/images/radio_part_bg.png';
+
+
 
 
 
