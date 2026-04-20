@@ -7,6 +7,7 @@ import 'package:islami_app/core/app_routes.dart';
 import 'package:islami_app/core/app_styles.dart';
 import 'package:islami_app/core/cache_helper.dart';
 import 'package:islami_app/features/home/tabs/quran/widget/sura_item_widget.dart';
+import 'package:islami_app/model/recent_surah.dart';
 
 import '../../../../model/quran_resources.dart';
 
@@ -19,21 +20,21 @@ class QuranTab extends StatefulWidget {
 
 class _QuranTabState extends State<QuranTab> {
   late final List<int> filterList = List.generate(114, (index) => index);
-  late TextEditingController _searchController;
+  late TextEditingController searchController;
 
   @override
   void initState() {
     super.initState();
-    _searchController = TextEditingController();
+    searchController = TextEditingController();
   }
 
   @override
   void dispose() {
-    _searchController.dispose();
+    searchController.dispose();
     super.dispose();
   }
 
-  List<int> _getFilteredList(String searchQuery) {
+  List<int> getFilteredList(String searchQuery) {
     if (searchQuery.isEmpty) {
       return List.generate(114, (index) => index);
     }
@@ -49,7 +50,8 @@ class _QuranTabState extends State<QuranTab> {
 
   @override
   Widget build(BuildContext context) {
-    List<int>? displayMostRecent = CacheHelper.getStringList('items');
+    final List<RecentSurah> displayMostRecent = CacheHelper.getRecentSurahs();
+    final filteredList = getFilteredList(searchController.text);
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
 
@@ -61,7 +63,7 @@ class _QuranTabState extends State<QuranTab> {
         children: [
           SizedBox(height: height * 0.02),
           TextField(
-            controller: _searchController,
+            controller: searchController,
             style: AppStyles.bold16White,
             cursorColor: AppColors.primary,
             onChanged: (value) {
@@ -78,12 +80,13 @@ class _QuranTabState extends State<QuranTab> {
             ),
           ),
           Text('Most Recently ', style: AppStyles.bold16White),
-          if (displayMostRecent!.isNotEmpty) ...[
+          if (displayMostRecent.isNotEmpty) ...[
             SizedBox(
               height: height * 0.16,
               child: ListView.separated(
                 scrollDirection: Axis.horizontal,
                 itemBuilder: (context, index) {
+                  final recentSurah = displayMostRecent[index];
                   return Container(
                     padding: EdgeInsets.symmetric(horizontal: width * 0.02),
                     decoration: BoxDecoration(
@@ -98,20 +101,20 @@ class _QuranTabState extends State<QuranTab> {
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                             Text(
-                              QuranResources.englishQuranSuraList[index],
+                              recentSurah.englishName,
                               style: AppStyles.bold24Black,
                             ),
                             Text(
-                              QuranResources.arabicQuranSuraList[index],
+                              recentSurah.arabicName,
                               style: AppStyles.bold24Black,
                             ),
                             Text(
-                              '${QuranResources.AyaNumberList[index]} Verses',
+                              '${recentSurah.versesCount} Verses',
                               style: AppStyles.bold14Black,
                             ),
                           ],
                         ),
-                        Image.asset(AppAssets.mostRecently),
+                        Image.asset(recentSurah.imagePath),
                       ],
                     ),
                   );
@@ -128,10 +131,9 @@ class _QuranTabState extends State<QuranTab> {
           Expanded(
             child: ListView.separated(
               itemBuilder: (context, index) {
-                final filteredList = _getFilteredList(_searchController.text);
                 return InkWell(
                   onTap: () async {
-                    await CacheHelper.saveList(filteredList[index]);
+                    await CacheHelper.saveRecentSurah(filteredList[index]);
                     setState(() {});
 
                     Navigator.of(context).pushNamed(
@@ -148,7 +150,7 @@ class _QuranTabState extends State<QuranTab> {
                   child: Divider(color: AppColors.white, thickness: 2),
                 );
               },
-              itemCount: _getFilteredList(_searchController.text).length,
+              itemCount: filteredList.length,
             ),
           ),
         ],

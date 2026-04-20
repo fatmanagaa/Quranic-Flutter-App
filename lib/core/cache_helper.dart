@@ -1,15 +1,21 @@
+import 'dart:convert';
+
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'cache_helper.dart' as prefs;
+import 'package:islami_app/model/recent_surah.dart';
 
 class CacheHelper {
-  static late SharedPreferences prefs;
+  static const String _recentSurahsKey = 'recent_surahs';
+  static const int _maxRecentSurahs = 10;
+  static late SharedPreferencesWithCache prefs;
 
   static Future<void> init() async {
-    prefs = await SharedPreferences.getInstance();
+    prefs = await SharedPreferencesWithCache.create(
+      cacheOptions: const SharedPreferencesWithCacheOptions(),
+    );
   }
 
-  static Future<bool> setBool(bool flag) async {
+  static Future<void> setBool(bool flag) async {
     return await prefs.setBool('introduction screen', flag);
   }
 
@@ -17,30 +23,36 @@ class CacheHelper {
     return prefs.getBool(key);
   }
 
-  static Future<void> saveList(int index) async {
-    /// [0]
-    /// [0, 1]
-    /// [0, 1, 2]
+  static Future<void> saveRecentSurah(int surahIndex) async {
+    final recentSurahs = getRecentSurahs();
+    final newSurah = RecentSurah.fromIndex(surahIndex);
 
-    List<int> previousList = getList('items');
+    recentSurahs.removeWhere((surah) => surah.surahIndex == surahIndex);
+    recentSurahs.insert(0, newSurah);
 
-    previousList.add(index);
+    if (recentSurahs.length > _maxRecentSurahs) {
+      recentSurahs.removeRange(_maxRecentSurahs, recentSurahs.length);
+    }
 
-    List<String> data = previousList.map((e) => e.toString()).toList();
-
-    await prefs.setStringList('items', data);
+    final data = recentSurahs.map((surah) => jsonEncode(surah.toJson())).toList();
+    await prefs.setStringList(_recentSurahsKey, data);
   }
 
-  static List<int> getList(String key) {
-    List<String>? list = prefs.getStringList(key);
+  static List<RecentSurah> getRecentSurahs() {
+    final data = prefs.getStringList(_recentSurahsKey) ?? [];
 
-    if (list == null) return [];
-
-    return list.map((e) => int.parse(e)).toList();
-  }
-
-  static List<int>? getStringList(String key) {
-    List<String>? data = prefs.getStringList(key);
-    return data?.map((e) => int.parse(e)).toSet().toList() ?? [];
+    return data
+        .map((item) {
+          try {
+            final json = jsonDecode(item);
+            if (json is Map<String, dynamic>) {
+              return RecentSurah.fromJson(json);
+            }
+          } catch (_) {
+          }
+          return null;
+        })
+        .whereType<RecentSurah>()
+        .toList();
   }
 }
