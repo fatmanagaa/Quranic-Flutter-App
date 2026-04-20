@@ -6,8 +6,10 @@ import 'package:islami_app/core/app_colors.dart';
 import 'package:islami_app/core/app_routes.dart';
 import 'package:islami_app/core/app_styles.dart';
 import 'package:islami_app/core/cache_helper.dart';
+import 'package:islami_app/features/home/tabs/quran/widget/most_recently_section.dart';
 import 'package:islami_app/features/home/tabs/quran/widget/sura_item_widget.dart';
-import 'package:islami_app/model/recent_surah.dart';
+import 'package:islami_app/provider/most_recently_provider.dart';
+import 'package:provider/provider.dart';
 
 import '../../../../model/quran_resources.dart';
 
@@ -26,6 +28,10 @@ class _QuranTabState extends State<QuranTab> {
   void initState() {
     super.initState();
     searchController = TextEditingController();
+    // Load recent surahs when the tab initializes
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<MostRecentlyProvider>().loadRecentSurahs();
+    });
   }
 
   @override
@@ -50,7 +56,6 @@ class _QuranTabState extends State<QuranTab> {
 
   @override
   Widget build(BuildContext context) {
-    final List<RecentSurah> displayMostRecent = CacheHelper.getRecentSurahs();
     final filteredList = getFilteredList(searchController.text);
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
@@ -59,7 +64,6 @@ class _QuranTabState extends State<QuranTab> {
       padding: EdgeInsetsGeometry.symmetric(horizontal: width * 0.05),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-
         children: [
           SizedBox(height: height * 0.02),
           TextField(
@@ -72,74 +76,30 @@ class _QuranTabState extends State<QuranTab> {
             decoration: InputDecoration(
               hintText: 'Sura Name',
               hintStyle: AppStyles.bold16White,
-
               enabledBorder: buildOutlineInputBorder(),
               focusedBorder: buildOutlineInputBorder(),
-
               prefixIcon: Image.asset(AppAssets.quranSearch),
             ),
           ),
-          Text('Most Recently ', style: AppStyles.bold16White),
-          if (displayMostRecent.isNotEmpty) ...[
-            SizedBox(
-              height: height * 0.16,
-              child: ListView.separated(
-                scrollDirection: Axis.horizontal,
-                itemBuilder: (context, index) {
-                  final recentSurah = displayMostRecent[index];
-                  return Container(
-                    padding: EdgeInsets.symmetric(horizontal: width * 0.02),
-                    decoration: BoxDecoration(
-                      color: AppColors.primary,
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    child: Row(
-                      spacing: width * 0.04,
-                      children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Text(
-                              recentSurah.englishName,
-                              style: AppStyles.bold24Black,
-                            ),
-                            Text(
-                              recentSurah.arabicName,
-                              style: AppStyles.bold24Black,
-                            ),
-                            Text(
-                              '${recentSurah.versesCount} Verses',
-                              style: AppStyles.bold14Black,
-                            ),
-                          ],
-                        ),
-                        Image.asset(recentSurah.imagePath),
-                      ],
-                    ),
-                  );
-                },
-                separatorBuilder: (context, index) {
-                  return SizedBox(width: width * 0.04);
-                },
-                itemCount: displayMostRecent.length,
-              ),
-            ),
-          ],
-
+          // Most Recently section using Provider
+          const MostRecentlySection(),
           Text('suras List', style: AppStyles.bold16White),
           Expanded(
             child: ListView.separated(
               itemBuilder: (context, index) {
                 return InkWell(
                   onTap: () async {
-                    await CacheHelper.saveRecentSurah(filteredList[index]);
-                    setState(() {});
+                    // Save recent surah and update provider
+                    await context
+                        .read<MostRecentlyProvider>()
+                        .addRecentSurah(filteredList[index]);
 
-                    Navigator.of(context).pushNamed(
-                      AppRoutes.suraDetailsRouteName,
-                      arguments: filteredList[index],
-                    );
+                    if (mounted) {
+                      Navigator.of(context).pushNamed(
+                        AppRoutes.suraDetailsRouteName,
+                        arguments: filteredList[index],
+                      );
+                    }
                   },
                   child: SuraItemWidget(index: filteredList[index]),
                 );
