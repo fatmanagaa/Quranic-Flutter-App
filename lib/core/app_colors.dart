@@ -8,4 +8,11 @@ class AppColors {
   static const Color white=Color(0xFFFFFFFF);
   static const Color transparent=Colors.transparent;
   static const Color blackBg=Color(0x99202020);
+  static const Color brownBg=Color(0xFF856B3F);
+  static const Color blackAzkar=Color(0xFF202020);
+  static const Color goldAzkar=Color(0xFFB19768);
+
+
+
+
 }
