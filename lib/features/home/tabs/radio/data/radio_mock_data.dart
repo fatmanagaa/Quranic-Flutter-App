@@ -15,4 +15,3 @@ class RadioMockData {
     RadioItem(name: 'Reciter Saad Al-Ghamdi'),
   ];
 }
-
