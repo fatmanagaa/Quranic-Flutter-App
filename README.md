@@ -52,11 +52,21 @@
 
 ## 📱 Screenshots
 
-> *Screenshots will be added here once the UI is finalized.*
+| Splash (Dark) | Splash (Light) | Quran Home |
+|:---:|:---:|:---:|
+| ![Splash Dark](assets/screenshots/Splash_Screen_dark.png) | ![Splash Light](assets/screenshots/Splash_screen_light.png) | ![Quran Home](assets/screenshots/quran_home_.png) |
 
-| Splash | Home / Quran | Hadeth | Sebha | Radio |
-|:---:|:---:|:---:|:---:|:---:|
-| *(coming soon)* | *(coming soon)* | *(coming soon)* | *(coming soon)* | *(coming soon)* |
+| Quran Details | Hadeth Home | Hadeth Details |
+|:---:|:---:|:---:|
+| ![Quran Details](assets/screenshots/quaran_details.png) | ![Hadeth Home](assets/screenshots/hadeth_home.png) | ![Hadeth Details](assets/screenshots/hadeth_details.png) |
+
+| Sebha | Search |
+|:---:|:---:|
+| ![Sebha](assets/screenshots/sebha_screen.png) | ![Search](assets/screenshots/search_feat.png) |
+
+| Onboarding 1 | Onboarding 2 | Onboarding 3 | Onboarding 4 |
+|:---:|:---:|:---:|:---:|
+| ![Onboarding 1](assets/screenshots/on_boarding_1.png) | ![Onboarding 2](assets/screenshots/on_boarding_2.png) | ![Onboarding 3](assets/screenshots/on_boarding_3.png) | ![Onboarding 4](assets/screenshots/on_boarding_4.png) |
 
 ---
 
