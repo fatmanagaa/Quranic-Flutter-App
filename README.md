@@ -52,11 +52,50 @@
 
 ## 📱 Screenshots
 
-> *Screenshots will be added here once the UI is finalized.*
-
-| Splash | Home / Quran | Hadeth | Sebha | Radio |
-|:---:|:---:|:---:|:---:|:---:|
-| *(coming soon)* | *(coming soon)* | *(coming soon)* | *(coming soon)* | *(coming soon)* |
+<table>
+  <tr>
+    <td align="center">
+      <strong>Splash (Light)</strong><br>
+      <img src="assets/screenshots/Splash_screen_light.png" width="220" alt="Light splash screen">
+    </td>
+    <td align="center">
+      <strong>Splash (Dark)</strong><br>
+      <img src="assets/screenshots/Splash_Screen_dark.png" width="220" alt="Dark splash screen">
+    </td>
+    <td align="center">
+      <strong>Onboarding</strong><br>
+      <img src="assets/screenshots/on_boarding_1.png" width="220" alt="Onboarding screen">
+    </td>
+  </tr>
+  <tr>
+    <td align="center">
+      <strong>Quran Home</strong><br>
+      <img src="assets/screenshots/quran_home_.png" width="220" alt="Quran home screen">
+    </td>
+    <td align="center">
+      <strong>Search</strong><br>
+      <img src="assets/screenshots/search_feat.png" width="220" alt="Search feature screen">
+    </td>
+    <td align="center">
+      <strong>Surah Details</strong><br>
+      <img src="assets/screenshots/quaran_details.png" width="220" alt="Surah details screen">
+    </td>
+  </tr>
+  <tr>
+    <td align="center">
+      <strong>Hadeth Home</strong><br>
+      <img src="assets/screenshots/hadeth_home.png" width="220" alt="Hadeth home screen">
+    </td>
+    <td align="center">
+      <strong>Hadeth Details</strong><br>
+      <img src="assets/screenshots/hadeth_details.png" width="220" alt="Hadeth details screen">
+    </td>
+    <td align="center">
+      <strong>Sebha</strong><br>
+      <img src="assets/screenshots/sebha_screen.png" width="220" alt="Sebha screen">
+    </td>
+  </tr>
+</table>
 
 ---
 
